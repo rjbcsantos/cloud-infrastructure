@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: cloud-infrastructure-ctn
-          image: rodrigojbcs/cloud-infrastructure:202308251916-54c3ed3
+          image: rodrigojbcs/cloud-infrastructure:202308271301-b27eb54
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
@@ -30,3 +30,4 @@ spec:
           envFrom:
             - configMapRef:
                 name: cloud-infrastructure-cm
+

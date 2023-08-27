@@ -37,7 +37,7 @@ spec:
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-credentials
+                  name: mysql-secrets
                   key: root-password
       volumes:
         - name: mysql-persistent-storage

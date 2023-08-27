@@ -11,3 +11,6 @@ data:
   TYPEORM_USERNAME: test
   TYPEORM_PORT: "3306"
   TYPEORM_PASSWORD: test  # TODO(rodrigo.santos): Move to a secret.
+  TYPEORM_ENTITIES: build/entity/*.js
+  TYPEORM_SUBSCRIBERS: build/subscriber/*.js
+  TYPEORM_MIGRATIONS : build/migration/*.js
