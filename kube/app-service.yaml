@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-infrastructure-svc
+  labels:
+    app: cloud-infrastructure-app
+spec:
+  selector:
+    app: cloud-infrastructure-app
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000

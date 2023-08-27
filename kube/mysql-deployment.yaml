@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-dpl
+  labels:
+    app: mysql-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-app
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+    spec:
+      containers:
+        - name: mysql-ctn
+          image: mariadb:5.5
+          ports:
+            - containerPort: 3306
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "5m"
+            limits:
+              memory: "256Mi"
+              cpu: "20m"
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+          envFrom:
+            - configMapRef:
+                name: mysql-cm
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: root-password
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
