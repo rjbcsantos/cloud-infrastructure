@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata: 
-  name: mysql-cm
-  labels:
-    name: mysql-map
-data:
-  MYSQL_DATABASE: test
-  MYSQL_USER: test

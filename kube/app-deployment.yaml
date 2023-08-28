@@ -5,7 +5,7 @@ metadata:
   labels:
     app: cloud-infrastructure-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: cloud-infrastructure-app
@@ -14,6 +14,14 @@ spec:
       labels:
         app: cloud-infrastructure-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions: [
+                  { key: app, operator: In, values: [cloud-infrastructure-app] }
+                ]
+              topologyKey: "topology.kubernetes.io/zone"
       containers:
         - name: cloud-infrastructure-ctn
           image: rodrigojbcs/cloud-infrastructure:202308271301-b27eb54
@@ -27,7 +35,25 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "20m"
-          envFrom:
-            - configMapRef:
-                name: cloud-infrastructure-cm
-
+          env:
+            - name: TYPEORM_CONNECTION
+              value: mysql
+            - name: TYPEORM_HOST
+              value: mysql-svc.default.svc.cluster.local
+            - name: TYPEORM_PORT
+              value: "3306"
+            - name: TYPEORM_DATABASE
+              value: test
+            - name: TYPEORM_USERNAME
+              value: test
+            - name: TYPEORM_ENTITIES
+              value: build/entity/*.js
+            - name: TYPEORM_SUBSCRIBERS
+              value: build/subscriber/*.js
+            - name: TYPEORM_MIGRATIONS
+              value: build/migration/*.js
+            - name: TYPEORM_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: user-password
