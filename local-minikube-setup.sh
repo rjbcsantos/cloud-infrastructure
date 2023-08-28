@@ -14,13 +14,13 @@ which minikube > /dev/null || {
 }
 
 # Start the minikube-multinode with 3 nodes.
-minikube start --nodes 3 -p minikube-multinode --kubernetes-version v1.26.3 --driver=docker
-
+minikube start --nodes 3 -p minikube-multinode --kubernetes-version v1.26.3
 # Fix the kubectl context, as it's often stale.
 minikube -p minikube-multinode update-context
 
-# Add ingress addon to the minikube cluster.
+# Add ingress and metrics-server addons to the minikube cluster.
 minikube -p minikube-multinode addons enable ingress
+minikube -p minikube-multinode addons enable metrics-server
 
 # Display the cluster informations.
 echo "Get cluster details to check its running"
