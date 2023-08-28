@@ -5,11 +5,10 @@ metadata:
   labels:
     app: cloud-infrastructure-app
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: cloud-infrastructure-app
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-      nodePort: 32001
